@@ -1,4 +1,6 @@
-\documentclass{beamer}
+\documentclass[notes=no]{beamer}
+%\documentclass[notes=only]{beamer}
+%\documentclass[notes]{beamer}
 
 \usetheme[white, compactlogo]{Lilly}
 
@@ -160,11 +162,11 @@
 	Example: $\mathbb{R}, \mathbb{R}^2, \mathbb{R}^{\mathbb{R}}, \mathbb{R}^{\cal X}, C(\cal{X})$.
 \end{frame}
 
-\note[enumerate]       % Add notes to yourself that will be displayed when
-{                      % typeset with the notes or notesonly class options
-	\item Note for Point 1
-	\item Note for Point 2
+\note[enumerate]{
+\item \bbR^\bbR: the set of functions from $\bbR \rightarrow \bbR$.
+\item \bbR^{\calX}: the set of functions from $\calX \rightarrow \bbR$
 }
+
 
 \begin{frame}
 	\frametitle{Banach Spaces}
@@ -207,12 +209,12 @@ $L^2$ space is a banach space, but it is also a Hilbert space. $V$ is the vector
 \begin{frame}
 	\frametitle{Reproducing Kernel Hilbert Spaces(RKHS)}
 	\begin{definition}[RKHS]
-		A Hilbert space of real-valued functions $\cal{H}$ is an RKHS if every evaluation functional is continuous.
+		A Hilbert space of real-valued functions $\cal{H}$ is an RKHS if every evaluation functional is bounded and continuous.
 	\end{definition}
 	\begin{variableblock}{Evaluation functional}{bg=LillyGreen25,fg=black}{bg=LillyGreen75,fg=black}
 		Let $\cal{H}$ be a Hilbert space of real-valued functions from $\cal{X}$ to $\mathbb{R}$, i.e. $\mathbb{R}^{\cal{X}}$  where $\cal{X}$ is an arbitrary set. For a fixed $x \in {\cal X}$, the evaluation functional ${\cal L}_x:\cal{H} \rightarrow \mathbb{R}$ is defined as,
 		\begin{align*}
-			{\cal L}_x f &\triangleq f(x),
+			{\cal L}_x (f) &\triangleq f(x),
 		\end{align*}
 		where $f \in \cal{H}$. Evaluation functionals are linear since,
 		\begin{eqnarray*}
@@ -224,7 +226,7 @@ $L^2$ space is a banach space, but it is also a Hilbert space. $V$ is the vector
 \begin{frame}
 	\frametitle{Reproducing Kernel}
 	\begin{theorem}[Riesz representation theorem]
-		Let $T$ be a continuous linear functional on a Hilbert space ${\cal H}$. There exists a unique $g_{T} \in {\cal H}$ such that $T f = \langle g_{T}, f\rangle, \forall  f \in {\cal H}$. The element $g_{T}$ is called the representer of $T$.
+		If $T$ be a bounded linear functional on a Hilbert space ${\cal H}$,  then there exists a unique $g \in {\cal H}$ such that $T(f) = \langle g, f\rangle, \forall  f \in {\cal H}$. The element $g$ is called the representer of $T$.
 	\end{theorem}
 	\begin{definition}[Reproducing kernel]
 		Let $K_x \in {\cal H}$ be a representer, and $\langle K_x, f\rangle = f(x), \forall f \in {\cal H}$. The symmetric bivariate function $K(x,y)=\langle K_x, K_y\rangle=K_x(y)=K_y(x)$ is called the reproducing kernel (RK) of the space ${\cal H}$ and it has the reproducing property $\langle K(x,\cdot), f(\cdot)\rangle = f(x)$.
@@ -235,9 +237,27 @@ $L^2$ space is a banach space, but it is also a Hilbert space. $V$ is the vector
 	\end{theorem}
 \end{frame}
 
+\note{
+Riesz theorem can be proved by construction. For seperable Hilbert space, we can have basis as $\phi_j$, we can see that 
+\begin{align*}
+g&=\sum_j T(\phi_j) \phi_j. 
+\end{align*}
+For each evaluation functionals ($\calL_x$), we have
+\begin{align*}
+\calL_x(f) &=f(x)=\langle f, k_x \rangle
+\end{align*}
+
+The proof of the Moore-Aronszajn theorem goes to 4 steps
+\begin{enumerate}
+	\item Define a pre-Hilbert space $\calH_0$.
+	\item define a dot product on $\calH_0$.
+	\item construct $\calH$ as a completion of $\calH_0$.
+	\item define a dot product on $\calH$.
+\end{enumerate}
+}
 
 \begin{frame}
-	\frametitle{Why RKHS Matters}
+	\frametitle{Why RKHS Matters - From Infinity to Finite}
 	A general class of regularization problems has the form,
 	\begin{eqnarray*}
 		\underset{f \in {\cal H}} {\minimize}  \left[\sum_{i=1}^n L\{y_i, f(x_i)\} + \lambda J(f) \right],
@@ -248,6 +268,9 @@ $L^2$ space is a banach space, but it is also a Hilbert space. $V$ is the vector
 	\end{align*}
 	where the first term represents an expansion in ${\cal H}_0$.
 \end{frame}
+
+
+
 
 \begin{frame}
 	\frametitle{Existence of Minimizer}
